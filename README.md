@@ -11,11 +11,17 @@ different keys.
 
 ##Key-bindings
 "1" = toggle fullscreen.
+
 "2" = toggle random deviation of particles
+
 "3" = toggle color
+
 "4" = spawn particles on left click (default)
+
 "5" = spawn fireworks on left click
+
 "6" = spawn emitters on left click
+
 "7" = edit velocity and direction of particles created by emitter
 
 dependencies:
