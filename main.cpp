@@ -105,8 +105,23 @@ void display(void)
 			glLineWidth(2.5);
 			glColor3f(1.0, 0.0, 0.0);
 			glBegin(GL_LINES);
-			glVertex2f(emitters[selected].x, emitters[selected].y);
-			glVertex2f(mx,my);
+				glVertex2f(emitters[selected].x, emitters[selected].y);
+				glVertex2f(mx,my);
+			glEnd();
+			glLineWidth(2.5);
+			glColor3f(1.0, 1.0, 1.0);
+			glBegin(GL_LINES);
+				glVertex2f(emitters[selected].x - 4, emitters[selected].y - 4);
+				glVertex2f(emitters[selected].x + 4, emitters[selected].y - 4);
+				
+				glVertex2f(emitters[selected].x + 4, emitters[selected].y - 4);
+				glVertex2f(emitters[selected].x + 4, emitters[selected].y + 4);
+				
+				glVertex2f(emitters[selected].x + 4, emitters[selected].y + 4);
+				glVertex2f(emitters[selected].x - 4, emitters[selected].y + 4);
+				
+				glVertex2f(emitters[selected].x - 4, emitters[selected].y + 4);
+				glVertex2f(emitters[selected].x - 4, emitters[selected].y - 4);
 			glEnd();
 	}
 	//draw screen
@@ -201,13 +216,17 @@ void keyPressed(unsigned char key, int x, int y)
 	else if(key == 55 && edit){
 		edit = false;
 	}
-	if (key == 46 && selected < 10)
+	if (key == 46 && selected < e_index)
 	{
 		selected++;
+		mx = emitters[selected].temp.getPosition().x;
+		my = emitters[selected].temp.getPosition().y;
 	}
 	if (key == 44 && selected > -1)
 	{
 		selected--;
+		mx = emitters[selected].temp.getPosition().x;
+		my = emitters[selected].temp.getPosition().y;
 	}
 	
 }
@@ -267,8 +286,7 @@ void update(){
 				emitters[e_index].render = true;
 				emitters[e_index].setParticle(mx,my,2,1,0.5f,1.0f,0.0f);
 				e_index++;
-				usleep(500000);
-			//}
+				usleep(100000);
 		}
 		if(edit){
 			//edit calculations
@@ -278,8 +296,6 @@ void update(){
 				x_vel = 0 - (a / 10) * c;
 				y_vel = 0 - (b / 10) * c;
 				emitters[selected].temp.setVelocity(x_vel,y_vel,0.0f);
-			
-			//printf("xvel:%f yvel:%f a:%d b:%d c:%f ",x_vel,y_vel,a,b,c);
 		}
 	}
 	for(i = 0;i < 1000;i++){
@@ -310,7 +326,6 @@ void update(){
 			}
 		}
 	}
-	if(e_index >= 9)e_index = 0;
 
 }
 int main(int argc, char** argv)
