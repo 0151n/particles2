@@ -26,9 +26,13 @@ different keys.
 
 dependencies:
 1. Opengl - Graphics library
+
 2. Glut - Utilities for OpenGl
+
 3. Xi - Input library for X
+ 
 4. Xmu - mouse input library for X
+
 5. X11 - X11 library
 
 ##Compilation
