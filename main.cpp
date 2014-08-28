@@ -277,6 +277,7 @@ void update(){
 				c = sqrt((a * a) + (b * b));
 				x_vel = 0 - (a / 10) * c;
 				y_vel = 0 - (b / 10) * c;
+				emitters[selected].temp.setVelocity(x_vel,y_vel,0.0f);
 			
 			//printf("xvel:%f yvel:%f a:%d b:%d c:%f ",x_vel,y_vel,a,b,c);
 		}
@@ -304,7 +305,7 @@ void update(){
 	for(i = 0;i < 10;i++){
 		if(emitters[i].alive == true){
 			if(emitters[i].update(framenum)){
-					particles[index] = emitters[i].emit(x_vel,y_vel);
+					particles[index] = emitters[i].emit(0,0);
 					index++; 
 			}
 		}

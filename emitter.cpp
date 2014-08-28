@@ -16,7 +16,7 @@ int Emitter::update(int time) {
 //emit method
 voxel::Particle Emitter::emit(float x_velocity,float y_velocity){
 		//return particle
-		temp.setVelocity(x_velocity,y_velocity,0.0f);
+	//	temp.setVelocity(x_velocity,y_velocity,0.0f);
 		return temp;
 }
 //method for setting particle values
