@@ -12,26 +12,19 @@ int Firework::update(float par1){
 int Firework::explode(voxel::Particle *particles, int index,bool def,int num){
 	int i = 0;
 	//int ran;
-	for(i = 0;i < 10;i++){
+	for(i = 0;i < 20;i++){
 		sub[i].setAcceleration(0.0f,9.0f,0.0f);
 		sub[i].setMass(2.0f);
 		sub[i].setDamping(0.99f);
 	}
 	//set submunition velocitys individualy to a default
 	if(def){
-		num = 8;
-		sub[0].setVelocity(0.0f,5.0f,0.0f);
-		sub[1].setVelocity(5.0f,5.0f,0.0f);	
-		sub[2].setVelocity(5.0f,0.0f,0.0f);
-		sub[3].setVelocity(5.0f,-5.0f,0.0f);
-		sub[4].setVelocity(0.0f,-5.0f,0.0f);
-		sub[5].setVelocity(-5.0f,-5.0f,0.0f);
-		sub[6].setVelocity(-5.0f,0.0f,0.0f);
-		sub[7].setVelocity(-5.0f,5.0f,0.0f);
-		sub[8].setVelocity(0.0f,0.0f,0.0f);
-		sub[9].setVelocity(0.0f,0.0f,0.0f);
+		num = 20;
+		for(i = 0;i < 20;i++){
+				setParticle(i,(rand() % 15 + (-5)),(rand() % 15 + (-5)),1,1.0f,1.0f,0.0f);
+		}
 	}	
-	if(num > 10)num = 10;
+	if(num > 20)num = 20;
 	for(i = 0;i < num;i++){
 		//ran = (rand() % 3) + 1;
 		//std::cout << ran << "\n";
@@ -40,4 +33,11 @@ int Firework::explode(voxel::Particle *particles, int index,bool def,int num){
 		particles[index + i].setPosition(position.x,position.y,0.0f);
 	}
 	return index + num;	
+}
+int Firework::setParticle(int part,int x_vel,int y_vel,int size,float r,float g,float b){
+	sub[part].setVelocity(voxel::Vec3(x_vel,y_vel,0.0f));
+	sub[part].size = size;
+	sub[part].red = r;
+	sub[part].green = g;
+	sub[part].blue = b;
 }

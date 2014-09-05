@@ -282,7 +282,7 @@ void update(){
 				f_index++;
 			}
 		}
-		if(emit){
+		if(emit && e_index < 10){
 			//if(framenum % 10 == 0){
 				emitters[e_index].x = mx;
 				emitters[e_index].y = my;
@@ -299,8 +299,8 @@ void update(){
 				a = mx - emitters[selected].x;
 				b = my - emitters[selected].y;
 				c = sqrt((a * a) + (b * b));
-				x_vel = 0 - (a / 10) * c;
-				y_vel = 0 - (b / 10) * c;
+				x_vel = 0 - (a / 20) * c;
+				y_vel = 0 - (b / 20) * c;
 				emitters[selected].temp.setVelocity(x_vel,y_vel,0.0f);
 				emitters[selected].temp_f.setVelocity(x_vel,y_vel,0.0f);
 		}
