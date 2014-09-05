@@ -10,7 +10,7 @@
 #include <cmath>
 #include <time.h> 
 #include <unistd.h>
-#define PI 3.14159265
+
 //particle array
 voxel::Particle particles[1000];
 //fireworks array
@@ -90,6 +90,7 @@ void display(void)
 				glEnd();
 			}
 	}
+	if(edit || emit){
 	for(i = 0;i < 10;i++){
 			if(emitters[i].alive && emitters[i].render){
 				glColor3f(0.5f,0.5f,0.5f);
@@ -101,14 +102,13 @@ void display(void)
 				glEnd();
 			}
 	}
-	if(edit){
 			glLineWidth(2.5);
 			glColor3f(1.0, 0.0, 0.0);
 			glBegin(GL_LINES);
 				glVertex2f(emitters[selected].x, emitters[selected].y);
 				glVertex2f(mx,my);
 			glEnd();
-			glLineWidth(2.5);
+			glLineWidth(1.0);
 			glColor3f(1.0, 1.0, 1.0);
 			glBegin(GL_LINES);
 				glVertex2f(emitters[selected].x - 4, emitters[selected].y - 4);
@@ -152,7 +152,7 @@ void keyPressed(unsigned char key, int x, int y)
     /* If escape is pressed, kill everything. */
     if (key == 27) 
     { 
-	/* 0shut down our window */
+	/* shut down our window */
 	glutDestroyWindow(window); 
 	/* exit the program...normal termination. */
 	exit(0);
@@ -228,7 +228,12 @@ void keyPressed(unsigned char key, int x, int y)
 		mx = emitters[selected].temp.getPosition().x;
 		my = emitters[selected].temp.getPosition().y;
 	}
-	
+	if(key == 56 && edit && emitters[selected].ord == 0){
+			emitters[selected].ord = 1;
+	}
+	else if(key == 56 && edit && emitters[selected].ord == 1){
+			emitters[selected].ord = 0;
+	}
 }
 void mouse(int button,int state,int x,int y){
 	mx = x;
@@ -284,18 +289,20 @@ void update(){
 				emitters[e_index].wait = 30;
 				emitters[e_index].alive = true;
 				emitters[e_index].render = true;
-				emitters[e_index].setParticle(mx,my,2,1,0.5f,1.0f,0.0f);
+				emitters[e_index].setParticle(mx,my,2,0.5f,1.0f,0.0f);
+				emitters[e_index].setFirework(mx,my,60,0.1f,5.0f,0.0f);
 				e_index++;
 				usleep(100000);
 		}
 		if(edit){
 			//edit calculations
-				a = mx - emitters[selected].emit_x;
-				b = my - emitters[selected].emit_y;
+				a = mx - emitters[selected].x;
+				b = my - emitters[selected].y;
 				c = sqrt((a * a) + (b * b));
 				x_vel = 0 - (a / 10) * c;
 				y_vel = 0 - (b / 10) * c;
 				emitters[selected].temp.setVelocity(x_vel,y_vel,0.0f);
+				emitters[selected].temp_f.setVelocity(x_vel,y_vel,0.0f);
 		}
 	}
 	for(i = 0;i < 1000;i++){
@@ -321,8 +328,16 @@ void update(){
 	for(i = 0;i < 10;i++){
 		if(emitters[i].alive == true){
 			if(emitters[i].update(framenum)){
-					particles[index] = emitters[i].emit(0,0);
-					index++; 
+					if (emitters[i].ord == 0)
+					{			
+						particles[index] = emitters[i].emit(0,0);
+						index++; 	
+					}
+					if (emitters[i].ord == 1)
+					{			
+						fireworks[f_index] = emitters[i].emit_f(0,0);
+						f_index++; 	
+					}
 			}
 		}
 	}
