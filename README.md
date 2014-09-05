@@ -24,6 +24,8 @@ different keys.
 
 "7" = edit velocity and direction of particles created by emitter
 
+"8" = toggle particle emitted from emiiter (particle -> firework)
+
 dependencies:
 1. Opengl - Graphics library
 
